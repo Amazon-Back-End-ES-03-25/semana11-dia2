@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "93897d56-159b-4f78-a0c9-3459eb21cce5",
+		"name": "Table Booking Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "21489776",
+		"_collection_link": "https://amazon-es0325.postman.co/workspace/Amazon-ES_03_25~16460180-8383-441d-af12-771a91cd649a/collection/21489776-93897d56-159b-4f78-a0c9-3459eb21cce5?action=share&source=collection_link&creator=21489776"
+	},
+	"item": [
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"john@example.com\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Availability",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/tables/availability?date=2025-06-08&time=19:30&peopleCount=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"tables",
+						"availability"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2025-06-08"
+						},
+						{
+							"key": "time",
+							"value": "19:30"
+						},
+						{
+							"key": "peopleCount",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tableId\": 1,\n    \"customerId\": 2,\n    \"date\": \"2025-06-08\",\n    \"time\": \"19:30\",\n    \"peopleCount\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/api/bookings"
+			},
+			"response": []
+		},
+		{
+			"name": "Booking Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/bookings/1/status?status=CANCELLED",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"bookings",
+						"1",
+						"status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "CANCELLED"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Booking",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:8080/api/bookings/1"
+			},
+			"response": []
+		}
+	]
+}
