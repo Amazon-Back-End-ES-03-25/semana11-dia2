@@ -66,9 +66,12 @@ public class BookingService {
         booking.setPeopleCount(dto.getPeopleCount());
         booking.setStatus(BookingStatus.CONFIRMED);
 
+        // solo actualiza la lista en memoria no en BBDD
         customer.addBooking(booking);
         table.addBooking(booking);
 
+        // aunque la relación es bidireccional y hay cascade, Booking es una nueva entidad
+        // como Customer y Table ya están guardados, mejor guardar explícitamente el Booking aquí
         Booking savedBooking = bookingRepository.save(booking);
 
         BookingResponseDTO responseDTO = new BookingResponseDTO(savedBooking.getId(), savedBooking.getStatus(), savedBooking.getDate(),
@@ -77,15 +80,15 @@ public class BookingService {
         return responseDTO;
     }
 
-    public void updateBookingStatus(Long bookingId, BookingStatus status){
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(()-> new NotFoundException("Booking"));
+    public void updateBookingStatus(Long bookingId, BookingStatus status) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Booking"));
 
         booking.setStatus(status);
         bookingRepository.save(booking);
     }
 
-    public void deleteBooking(Long bookingId){
-        Booking booking = bookingRepository.findById(bookingId).orElseThrow(()-> new NotFoundException("Booking"));
+    public void deleteBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Booking"));
         // bookingRepository.delete(booking); --> funciona igual
         bookingRepository.deleteById(bookingId);
     }
