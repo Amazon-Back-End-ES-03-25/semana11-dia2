@@ -9,6 +9,29 @@
 	"item": [
 		{
 			"name": "User Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let json = pm.response.json();",
+							"pm.environment.set(\"access_token\", json.access_token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -61,13 +84,34 @@
 			"response": []
 		},
 		{
+			"name": "Logged User Bookings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/api/bookings/me"
+			},
+			"response": []
+		},
+		{
 			"name": "Booking",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"tableId\": 1,\n    \"customerId\": 2,\n    \"date\": \"2025-06-08\",\n    \"time\": \"19:30\",\n    \"peopleCount\": 2\n}",
+					"raw": "{\n    \"tableId\": 2,\n    \"customerId\": 2,\n    \"date\": \"2025-06-08\",\n    \"time\": \"19:30\",\n    \"peopleCount\": 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,10 +125,16 @@
 		{
 			"name": "Booking Status",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "PATCH",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/bookings/1/status?status=CANCELLED",
+					"raw": "http://localhost:8080/api/bookings/1/status?status=CONFIRMED",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +149,7 @@
 					"query": [
 						{
 							"key": "status",
-							"value": "CANCELLED"
+							"value": "CONFIRMED"
 						}
 					]
 				}
@@ -109,6 +159,12 @@
 		{
 			"name": "Booking",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{access_token}}"
+					}
+				},
 				"method": "DELETE",
 				"header": [],
 				"url": "http://localhost:8080/api/bookings/1"

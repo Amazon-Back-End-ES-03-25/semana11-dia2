@@ -13,6 +13,7 @@ import com.ironhack.semana11dia2.repository.TableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,5 +92,26 @@ public class BookingService {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NotFoundException("Booking"));
         // bookingRepository.delete(booking); --> funciona igual
         bookingRepository.deleteById(bookingId);
+    }
+
+    public List<BookingResponseDTO> getBookingsForCurrentUser(String username) {
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null) {
+            throw new NotFoundException("Customer");
+        }
+        List<Booking> bookings = customer.getBookings();
+        List<BookingResponseDTO> responseList = new ArrayList<>();
+        for (Booking b : bookings) {
+            responseList.add(new BookingResponseDTO(
+                    b.getId(),
+                    b.getStatus(),
+                    b.getDate(),
+                    b.getTime(),
+                    b.getPeopleCount(),
+                    customer.getUsername(),
+                    b.getTable().getId()
+            ));
+        }
+        return responseList;
     }
 }

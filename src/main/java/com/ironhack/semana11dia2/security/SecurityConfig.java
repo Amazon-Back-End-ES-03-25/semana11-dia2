@@ -73,9 +73,10 @@ public class SecurityConfig {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/api/login/**").permitAll()// public endpoint, no tienes que estar logeado ni ser parte de mi aplicación
                 .requestMatchers(GET, "/api/tables/availability").permitAll()
+                .requestMatchers(GET, "/api/bookings/me").hasAnyAuthority("ROLE_USER")
                 .requestMatchers(POST, "/api/bookings").hasAnyAuthority("ROLE_USER")
                 .requestMatchers(PATCH, "/api/bookings/*/status").hasAnyAuthority("ROLE_ADMIN")
-                .requestMatchers(DELETE, "/api/bookings/*").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .requestMatchers(DELETE, "/api/bookings/*").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().authenticated()); // aquí indicamos que cualquier otro endpoint tiene que tener autenticación (privado)
 
         // Añade el filtro de autenticación al objeto http de seguridad

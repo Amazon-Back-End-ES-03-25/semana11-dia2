@@ -49,6 +49,7 @@ CREATE DATABASE booking_app;
 
 ### BookingController
 
+* `GET /api/bookings/me` → Consultar reservas del usuario logeado (ROLE\_USER)
 * `POST /api/bookings` → Crear reserva (ROLE\_USER)
 * `PATCH /api/bookings/{id}/status` → Actualizar estado (ROLE\_ADMIN)
 * `DELETE /api/bookings/{id}` → Eliminar reserva (ROLE\_USER / ROLE\_ADMIN)
