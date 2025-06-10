@@ -23,6 +23,7 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false) // hacemos que el username sea único en la base de datos y obligatorio
     private String username;
     private String password;
 

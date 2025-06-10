@@ -22,6 +22,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false) // hacemos que el name sea único y obligatorio en la base de datos
     private String name;
 
     @ManyToMany(mappedBy = "roles", fetch = LAZY)
